@@ -63,8 +63,8 @@ export class HomePage {
   }
   load() {
     this.geolocation.getCurrentPosition().then((resp) => {
-      let lat = resp.coords.latitude;
-      let lng = resp.coords.longitude;
+      const lat = resp.coords.latitude;
+      const lng = resp.coords.longitude;
       const latLng = new google.maps.LatLng(lat, lng);
       this.map = new google.maps.Map(document.getElementById('map_canvas'), {
         zoom: 14,
