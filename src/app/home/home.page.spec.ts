@@ -22,18 +22,19 @@ describe('HomePage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-    expect(component.title).toBeUndefined();
-  });
+//  it('should create', () => {
+//    expect(component).toBeTruthy();
+//    expect(component.title).toBeUndefined();
+//  });
 
-  it('change title', () => {
-    component.title = 'Mon Titre';
-    expect(component.title).toBe('Mon Titre');
-  });
+//  it('change title', () => {
+//    component.title = 'Mon Titre';
+//    expect(component.title).toBe('Mon Titre');
+//  });
 
-  it('update title', () => {
-    component.updateTitle();
-    expect(component.title).toBe('Mon Nouveau Titre');
-  });
+//  it('update title', () => {
+//    component.updateTitle();
+//    expect(component.title).toBe('Mon Nouveau Titre');
+//  });
 });
+

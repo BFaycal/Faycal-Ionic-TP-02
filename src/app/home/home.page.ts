@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController} from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 declare var google: any;
 
@@ -15,9 +16,13 @@ export class HomePage {
   title: string;
   imgData: string;
   map: any;
-  baseUrl = 'assets/images/';
+  latitude: any[] = [];
+  longitude: any[] = [];
 
-  constructor(private alertController: AlertController, private camera: Camera, public geolocation: Geolocation) {
+  constructor(private alertController: AlertController,
+              private camera: Camera,
+              public geolocation: Geolocation,
+              private localNotifications: LocalNotifications) {
     this.load();
   }
 
@@ -37,7 +42,7 @@ export class HomePage {
       buttons: ['OK']
     });
     // quand l alerte sera masquée
-    alert.onDidDismiss().then(() => console.log('alerte masquée'))
+    alert.onDidDismiss().then(() => console.log('alerte masquée'));
 
     // affichage de l alerte
     await alert.present();
@@ -63,76 +68,30 @@ export class HomePage {
   }
   load() {
     this.geolocation.getCurrentPosition().then((resp) => {
-      const lat = resp.coords.latitude;
-      const lng = resp.coords.longitude;
-      const latLng = new google.maps.LatLng(lat, lng);
-      this.map = new google.maps.Map(document.getElementById('map_canvas'), {
-        zoom: 14,
-        center: latLng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        mapTypeControl: false
+      // resp.coords.latitude
+      // resp.coords.longitude
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+    const watch = this.geolocation.watchPosition();
+    watch.subscribe(
+        (data) => {
+          this.latitude.push(data.coords.latitude);
+          console.log(this.latitude);
+          this.longitude.push(data.coords.longitude);
+          console.log(this.longitude);
+        });
+  }
+
+  simpleNotif(time: number) {
+      this.localNotifications.schedule({
+        title: `Notification de ${time}`,
+        text: `Affichage de Notification`,
+        trigger: {
+          at: new Date(
+              new Date().getTime() + time
+          )
+        },
       });
-      this.addMyPosition(latLng);
-      this.addHousePosition();
-      this.addCarPosition();
-    });
-  }
-  addMyPosition(latLng) {
-    const marker = new google.maps.Marker({
-      map: this.map,
-      position: latLng,
-      animation: google.maps.Animation.DROP,
-      title: 'My position'
-    });
-    this.addInfoWindowToMarker(marker);
-  }
-  addHousePosition() {
-    const icon = this.baseUrl + 'home-address.svg';
-    const latLng = new google.maps.LatLng(4.068998, 9.7118953);
-    const marker = new google.maps.Marker({
-      map: this.map,
-      position: latLng,
-      animation: google.maps.Animation.DROP,
-      title: 'House position',
-      icon: {
-        url: icon,
-        size: new google.maps.Size(32, 32),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(16, 16),
-        scaledSize: new google.maps.Size(32, 32)
-      }
-    });
-    this.addInfoWindowToMarker(marker);
-  }
-
-
-  addCarPosition() {
-    const icon = this.baseUrl + 'car.svg';
-    const latLng = new google.maps.LatLng(4.068998, 9.7318953);
-    const marker = new google.maps.Marker({
-      map: this.map,
-      position: latLng,
-      animation: google.maps.Animation.DROP,
-      title: 'Car position',
-      icon: {
-        url: icon,
-        size: new google.maps.Size(32, 32),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(16, 16),
-        scaledSize: new google.maps.Size(32, 32)
-      }
-    });
-    this.addInfoWindowToMarker(marker);
-  }
-
-
-  addInfoWindowToMarker(marker) {
-    const infoWindowContent = '<div id="content">' + marker.title + '</div>';
-    const infoWindow = new google.maps.InfoWindow({
-      content: infoWindowContent
-    });
-    marker.addListener('click', () => {
-      infoWindow.open(this.map, marker);
-    });
   }
 }
