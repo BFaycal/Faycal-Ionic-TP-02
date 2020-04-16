@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { Camera } from '@ionic-native/camera/ngx';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
+// import {Geolocation} from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   imports: [
@@ -21,6 +21,6 @@ import {Geolocation} from '@ionic-native/geolocation/ngx';
     ])
   ],
   declarations: [HomePage],
-  providers: [Camera, Geolocation]
+  providers: [Camera]
 })
 export class HomePageModule {}
