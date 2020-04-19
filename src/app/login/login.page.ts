@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../services/login.service';
 import User from '../models/User';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -8,7 +9,6 @@ import User from '../models/User';
     styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
     id = '';
     mdp = '';
 
@@ -16,10 +16,14 @@ export class LoginPage implements OnInit {
     loading = false;
     error: string;
 
-    constructor(private loginService: LoginService) {
-    }
+    constructor( private loginService: LoginService, private router: Router) { }
 
     ngOnInit() {
+
+    }
+
+    delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
     }
 
     login() {
@@ -27,7 +31,14 @@ export class LoginPage implements OnInit {
         this.error = null;
 
         this.loginService.login(this.id, this.mdp)
-            .subscribe(user => this.user = user,
+            .subscribe(
+                users => {
+                    this.user = users;
+                    setTimeout(() => {
+                            this.router.navigate(['home']);
+                        },
+                        1000);
+                },
                 error => {
                     this.error = error;
                     this.loading = false;

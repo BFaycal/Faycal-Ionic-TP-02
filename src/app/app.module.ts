@@ -7,6 +7,8 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import {CameraPreview} from '@ionic-native/camera-preview/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -22,8 +24,10 @@ import {LoginService} from './services/login.service';
         HttpClientModule],
     providers: [
         StatusBar,
+        Camera,
         Geolocation,
         LocalNotifications,
+        CameraPreview,
         SplashScreen,
         LoginService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}

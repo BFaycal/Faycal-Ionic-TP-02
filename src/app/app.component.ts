@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +13,6 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    public geolocation: Geolocation,
-    private localNotification: LocalNotifications,
     private statusBar: StatusBar
   ) {
     this.initializeApp();

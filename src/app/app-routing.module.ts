@@ -8,6 +8,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'camera-perview',
+    loadChildren: () => import('./camera-preview/camera-preview.module').then(m => m.CameraPreviewModuleviewPageModule)
+  }
 ];
 
 @NgModule({

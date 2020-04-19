@@ -18,6 +18,9 @@ export class HomePage {
   map: any;
   latitude: any[] = [];
   longitude: any[] = [];
+  isAndroid: string;
+  key: any;
+  clickSub: any;
 
   constructor(private alertController: AlertController,
               private camera: Camera,
@@ -66,6 +69,7 @@ export class HomePage {
       // Handle error
     });
   }
+
   load() {
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
@@ -82,16 +86,16 @@ export class HomePage {
           console.log(this.longitude);
         });
   }
-
-  simpleNotif(time: number) {
-      this.localNotifications.schedule({
-        title: `Notification de ${time}`,
-        text: `Affichage de Notification`,
-        trigger: {
-          at: new Date(
-              new Date().getTime() + time
-          )
-        },
-      });
+  multipleNotif() {
+    this.localNotifications.schedule([{
+      id: 1,
+      text: 'First Notification',
+      data: { secret: 'secret' }
+      }, {
+        id: 2,
+            title: 'Rendu-vous',
+          text: 'Secand Notification ',
+          led: 'FF0000'
+      }]);
   }
 }

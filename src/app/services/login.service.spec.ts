@@ -32,16 +32,16 @@ describe('LoginService', () => {
 
     it('login', () => {
         const service: LoginService = TestBed.get(LoginService);
-        const idTest = 'Plop';
+        const id = 'Bret';
         let userReturned: User;
 
-        service.login(idTest, 'replop')
+        service.login(id, '123')
             .subscribe(user => {
                 userReturned = user;
             });
 
         // attente de la requete
-        const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/users?username=' + idTest);
+        const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/users?username=' + id);
         // reponse a la requete
         req.flush(mockData);
         // verification que toutes les requetes soient terminees

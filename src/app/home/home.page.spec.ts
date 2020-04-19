@@ -1,7 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { Camera } from '@ionic-native/camera/ngx';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
 
 import { HomePage } from './home.page';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -14,7 +12,7 @@ describe('HomePage', () => {
     TestBed.configureTestingModule({
       declarations: [ HomePage ],
       imports: [IonicModule.forRoot(), RouterTestingModule],
-      providers: [Camera, Geolocation]
+//      providers: [Camera, Geolocation]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
@@ -22,19 +20,20 @@ describe('HomePage', () => {
     fixture.detectChanges();
   }));
 
-//  it('should create', () => {
-//    expect(component).toBeTruthy();
-//    expect(component.title).toBeUndefined();
-//  });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+    expect(component.title).toBeUndefined();
+  });
+/**
+  it('change title', () => {
+    component.title = 'Mon Titre';
+    expect(component.title).toBe('Mon Titre');
+});
 
-//  it('change title', () => {
-//    component.title = 'Mon Titre';
-//    expect(component.title).toBe('Mon Titre');
-//  });
-
-//  it('update title', () => {
-//    component.updateTitle();
-//    expect(component.title).toBe('Mon Nouveau Titre');
-//  });
+  it('update title', () => {
+   component.updateTitle();
+   expect(component.title).toBe('Mon Nouveau Titre');
+  });
+ **/
 });
 
